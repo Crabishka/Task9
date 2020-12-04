@@ -1,6 +1,7 @@
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import util.*;
@@ -9,18 +10,21 @@ import javax.swing.*;
 
 public class FileFunction {
 
+
     public List<Integer> arrayToList(int[] a) {
         ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < a.length; i++) {
-            list.add(a[i]);
+        for (int number : a) {
+            list.add(number);
         }
         return list;
     }
 
     public int[] listToArray(List<Integer> list) {
         int[] a = new int[list.size()];
-        for (int i = 0; i < a.length; i++){
-            a[i] = list.get(i);
+        int i = 0;
+        for (int number : list){
+            a[i] = number;
+            i++;
         }
         return a;
     }
@@ -35,10 +39,7 @@ public class FileFunction {
     }
 
     public void writeListIntoFile(String InputFile, List<Integer> list) throws FileNotFoundException {
-        int[] a = new int[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            a[i] = list.get(i);
-        }
+        int[] a = listToArray(list);
         util.ArrayUtils.writeArrayToFile(InputFile, a);
     }
 
