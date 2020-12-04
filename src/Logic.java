@@ -17,7 +17,7 @@ public class Logic {
                 if (difference % (j - i) != 0) continue;    // проверяем разность на адекватность
                 difference = difference / (j - i);          // если подходит, считаем ее
 
-                if (amountOfWrongNumbers(list, i, difference) < min) {  // если количество плохих чисел, при это разности
+                if (amountOfWrongNumbers(list, i, difference) <= min) {  // если количество плохих чисел, при это разности
                     min = amountOfWrongNumbers(list, i, difference);    // получилось минимальное, то записываем в min
                     indexOfMain = i;                                    // сохраняем индекс и разность числа, при котором
                     mainDifference = difference;                        // получился минимум "плохих" чисел
@@ -26,7 +26,11 @@ public class Logic {
             }
 
         List<Integer> result = new ArrayList<>();
-
+        int mainNumber = list.get(indexOfMain);
+        for (int i = 0; i < list.size(); i++) {
+            result.add(mainNumber - (indexOfMain - i) * mainDifference);
+        }
+        /*
         for (int i = 0; i < indexOfMain; i++) {                                    // теперь создаем новый список
             result.add(list.get(indexOfMain) - (indexOfMain - i) * mainDifference);// который основан на числе, при
         }                                                                          // котором получился минимум разности
@@ -36,19 +40,29 @@ public class Logic {
         for (int i = indexOfMain + 1; i < list.size(); i++) {                       // и слева от индекса минимума
             result.add(i, list.get(indexOfMain) + (i - indexOfMain) * mainDifference);
         }
+
+         */
         return result;
     }
 
     public int amountOfWrongNumbers(List<Integer> list, int n, int difference) {
         int mainNumber = list.get(n);   // берется опорное число, от которого будем проверять
         int count = 0;
+        int i = 0;
         // здесь просто находятся количество "плохих" чисел по формуле ариф прогрессии a[n]=a[i]+k*(n-i)
+        for (int number : list) {
+            if (mainNumber - (n - i) * difference != number) count++;
+            i++;
+        }
+        /*
         for (int i = 0; i < n - 1; i++) {
             if (mainNumber - (n - i) * difference != list.get(i)) count++;
         }
         for (int i = n + 1; i < list.size(); i++) {
             if (mainNumber + (i - n) * difference != list.get(i)) count++;
         }
+        */
+
         return count;
     }
 }
