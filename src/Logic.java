@@ -5,7 +5,7 @@ public class Logic {
 
     public List<Integer> Operation(List<Integer> list) {
 
-        int min = list.size() - 2;  // минимальное количество "плохих" чисел
+        int min = (list.size() == 3) ? 2 : list.size() - 2;  // минимальное количество "плохих" чисел
         int indexOfMain = 0; // индекс числа, на котором зафиксировано минимальное количество "плохих" чисел (назовем индекс минимума)
         int mainDifference = 0; // разность чисел, на которой зафиксировано минимальное количество "плохих" чисел
         int difference; // просто разность, которая меняется в цикле
@@ -14,10 +14,13 @@ public class Logic {
         int j = 0;
 
         for (int firstNumber : list) {
-
+            j = 0;
             for (int secondNumber : list) {
                 difference = secondNumber - firstNumber;     // считаем текущую разность
-                if (j - i == 0 || difference % (j - i) != 0) continue;    // проверяем разность на адекватность
+                if (j - i == 0 || difference % (j - i) != 0) { // проверяем разность на адекватность
+                    j++;
+                    continue;
+                }
                 difference = difference / (j - i);          // если подходит, считаем ее
 
                 if (amountOfWrongNumbers(list, i, difference, firstNumber) <= min) {  // если количество плохих чисел, при это разности
